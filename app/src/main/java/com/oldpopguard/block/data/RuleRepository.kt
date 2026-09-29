@@ -2,7 +2,6 @@ package com.oldpopguard.block.data
 
 import android.content.Context
 import android.util.Log
-import com.oldpopguard.block.network.RuleApi
 import com.oldpopguard.block.rule.BuiltinRules
 import com.oldpopguard.block.rule.RuleIndex
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +19,6 @@ class RuleRepository(private val context: Context) {
     }
 
     private val dao = AppDatabase.getInstance(context).ruleDao()
-    private val api = RuleApi.create()
 
     suspend fun initIfNeeded() {
         val count = dao.getRuleCount()
@@ -32,19 +30,9 @@ class RuleRepository(private val context: Context) {
     }
 
     suspend fun syncRules(): Boolean = withContext(Dispatchers.IO) {
-        try {
-            val localVersion = dao.getMaxVersion() ?: 0
-            val response = api.getRules(since = localVersion)
-            val remoteRules = response.rules
-            if (remoteRules.isEmpty()) return@withContext false
-            val entities = com.oldpopguard.block.rule.RuleMapper.toEntityList(remoteRules)
-            dao.insertRules(entities)
-            refreshIndex()
-            return@withContext true
-        } catch (e: Exception) {
-            Log.e(TAG, "规则同步失败", e)
-            return@withContext false
-        }
+        // 暂时不需要网络同步，直接返回true
+        Log.d(TAG, "暂时跳过网络同步")
+        return@withContext true
     }
 
     suspend fun refreshIndex() {
