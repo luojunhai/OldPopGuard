@@ -9,19 +9,8 @@ interface RuleApi {
     suspend fun getRules(@Query("since") sinceVersion: Int): RuleListResponse
 
     companion object {
-        private const val BASE_URL = "https://your-server.com/"
         fun create(): RuleApi {
-            val okHttpClient = okhttp3.OkHttpClient.Builder()
-                .connectTimeout(10, java.util.concurrent.TimeUnit.SECONDS)
-                .readTimeout(10, java.util.concurrent.TimeUnit.SECONDS)
-                .build()
-            val json = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
-            val retrofit = retrofit2.Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(okHttpClient)
-                .addConverterFactory(retrofit2.kotlinx.serialization.KotlinSerializationConverterFactory.create(json))
-                .build()
-            return retrofit.create(RuleApi::class.java)
+            throw NotImplementedError("暂时不需要网络请求")
         }
     }
 }
