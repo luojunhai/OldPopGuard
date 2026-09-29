@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">老年弹窗防护</string>
+    <string name="access_desc">弹窗防护辅助工具：自动识别广告弹窗的关闭按钮，帮助老年用户关闭骚扰弹窗。本服务不会收集屏幕内容、密码、隐私数据。</string>
+    <string name="access_summary">自动关闭广告弹窗，保护老年用户</string>
+</resources>
